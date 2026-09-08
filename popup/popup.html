@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Privacy Vision Agent</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 380px;
+            margin: 0;
+            padding: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f7f1e8;
+            color: #3d2b1f;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .header {
+            padding: 20px;
+
+            background: #8b5e3c;
+            color: #fffaf3;
+        }
+
+        .header h1 {
+            margin: 0;
+
+            font-family: Georgia, serif;
+
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+
+            font-size: 12px;
+
+            color: #f6eadc;
+        }
+
+
+        /* =====================================
+           MAIN SECTION
+        ===================================== */
+
+        .section {
+            margin: 12px;
+
+            padding: 16px;
+
+            background: #fffdf9;
+
+            border: 1px solid #eadcca;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(93, 63, 40, 0.08);
+        }
+
+
+        .title {
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+
+            color: #3d2b1f;
+        }
+
+
+        /* =====================================
+           TASK INPUT
+        ===================================== */
+
+        textarea {
+            width: 100%;
+
+            height: 78px;
+
+            padding: 11px;
+
+            resize: none;
+
+            border: 1px solid #d8c6b3;
+
+            border-radius: 7px;
+
+            background: #fffefa;
+
+            color: #3d2b1f;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #9b6a45;
+
+            box-shadow:
+                0 0 0 2px rgba(155, 106, 69, 0.12);
+        }
+
+        textarea::placeholder {
+            color: #9b8a7a;
+        }
+
+
+        /* =====================================
+           RUN BUTTON
+        ===================================== */
+
+        button {
+            width: 100%;
+
+            margin-top: 10px;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #8b5e3c;
+
+            color: #fffaf3;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #744b30;
+        }
+
+        button:disabled {
+            background: #b8a99b;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        .status-box {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 11px;
+
+            background: #f8f1e7;
+
+            border: 1px solid #eadcca;
+
+            border-radius: 7px;
+        }
+
+        .status-icon {
+            width: 9px;
+
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #8b5e3c;
+
+            flex-shrink: 0;
+        }
+
+        #status {
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            color: #5b4635;
+        }
+
+
+        /* =====================================
+           PRIVACY INFORMATION
+        ===================================== */
+
+        .privacy-box {
+            display: flex;
+
+            gap: 10px;
+
+            align-items: flex-start;
+
+            padding: 12px;
+
+            background: #f3eadf;
+
+            border-radius: 7px;
+
+            border: 1px solid #e5d5c2;
+        }
+
+        .privacy-icon {
+            font-size: 16px;
+
+            line-height: 1;
+        }
+
+        .privacy-text {
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            color: #604a38;
+        }
+
+        .privacy-text strong {
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #3d2b1f;
+        }
+
+
+        /* =====================================
+           HIDDEN ELEMENTS
+           
+           popup.js still needs these elements.
+           Actual screenshot/result are shown
+           on result.html.
+        ===================================== */
+
+        #screenshot,
+        #result {
+            display: none;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+            text-align: center;
+
+            padding: 5px 15px 15px;
+
+            color: #8c7866;
+
+            font-size: 10px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="header">
+
+        <h1>
+            🛡 Privacy Vision Agent
+        </h1>
+
+        <p>
+            Privacy-preserving browser automation
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================
+         TASK
+    ====================================== -->
+
+    <div class="section">
+
+        <div class="title">
+            Task / Command
+        </div>
+
+        <textarea
+            id="task"
+            placeholder="Example: Submit this form"
+        ></textarea>
+
+        <button id="runTask">
+            ▶ Run Task
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================
+         STATUS
+    ====================================== -->
+
+    <div class="section">
+
+        <div class="title">
+            Privacy Processing
+        </div>
+
+        <div class="status-box">
+
+            <div class="status-icon"></div>
+
+            <div id="status">
+                Ready. Your task is waiting to be processed.
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         PRIVACY INFORMATION
+    ====================================== -->
+
+    <div class="section">
+
+        <div class="privacy-box">
+
+            <div class="privacy-icon">
+                🔒
+            </div>
+
+            <div class="privacy-text">
+
+                <strong>
+                    Privacy protection is active
+                </strong>
+
+                Sensitive visual information is
+                detected and sanitized locally
+                before the screenshot is sent
+                to the server.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         HIDDEN ELEMENTS
+         
+         popup.js expects these IDs.
+         They remain in DOM to prevent errors.
+    ====================================== -->
+
+    <img
+        id="screenshot"
+        alt="Sanitized screenshot"
+    >
+
+    <div id="result"></div>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <div class="footer">
+        Local privacy filtering • Secure processing
+    </div>
+
+
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
+
+    <script src="../privacy/privacy.js"></script>
+
+    <script src="popup.js"></script>
+
+
+</body>
+
+</html>

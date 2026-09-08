@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Privacy Vision Agent - Sanitization Result
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================
+           PAGE
+        ===================================== */
+
+        body {
+            margin: 0;
+            padding: 28px 20px 45px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f4efe7;
+
+            color: #3b2a1d;
+        }
+
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .header {
+            position: relative;
+
+            padding: 24px 28px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b5e3c,
+                    #a8754d
+                );
+
+            color: #fffaf4;
+
+            box-shadow:
+                0 8px 24px rgba(91, 60, 35, 0.18);
+
+            overflow: hidden;
+        }
+
+
+        .header::after {
+            content: "◉";
+
+            position: absolute;
+
+            right: 28px;
+            top: 14px;
+
+            font-size: 70px;
+
+            opacity: 0.08;
+        }
+
+
+        .header h1 {
+            margin: 0;
+
+            font-size: 24px;
+
+            letter-spacing: -0.3px;
+        }
+
+
+        .header p {
+            margin: 7px 0 0;
+
+            font-size: 12px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =====================================
+           COMMON CARD
+        ===================================== */
+
+        .card {
+            margin-top: 16px;
+
+            padding: 20px;
+
+            background: #fffdf9;
+
+            border: 1px solid #e5d8c9;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 16px rgba(86, 57, 35, 0.08);
+        }
+
+
+        /* =====================================
+           LABELS
+        ===================================== */
+
+        .label {
+            margin-bottom: 9px;
+
+            color: #6e492f;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+        }
+
+
+        /* =====================================
+           PRIVACY BANNER
+        ===================================== */
+
+        .privacy {
+            padding: 15px 17px;
+
+            margin-bottom: 18px;
+
+            background: #f1e7d9;
+
+            border: 1px solid #dfccb5;
+
+            border-left: 4px solid #9a6944;
+
+            border-radius: 10px;
+
+            color: #5b402c;
+
+            font-size: 12px;
+
+            line-height: 1.55;
+        }
+
+
+        /* =====================================
+           SCREENSHOT
+        ===================================== */
+
+        img {
+            display: block;
+
+            width: 100%;
+
+            max-height: 620px;
+
+            object-fit: contain;
+
+            background: #eee7dd;
+
+            border: 1px solid #ddcfbe;
+
+            border-radius: 10px;
+
+            padding: 5px;
+        }
+
+
+        /* =====================================
+           VALUE BOXES
+        ===================================== */
+
+        .value {
+            padding: 13px 15px;
+
+            background: #f7f2eb;
+
+            border: 1px solid #e5d9ca;
+
+            border-radius: 9px;
+
+            color: #493526;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================
+           ACTION AREA
+        ===================================== */
+
+        .action {
+            padding: 16px;
+
+            background: #f3ede5;
+
+            border: 1px solid #dfd0bd;
+
+            border-radius: 10px;
+
+            color: #4d3626;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================
+           EXECUTE BUTTON
+        ===================================== */
+
+        button {
+            width: 100%;
+
+            margin-top: 15px;
+
+            padding: 13px 16px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b5e3c,
+                    #a8754d
+                );
+
+            color: #fffaf4;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 0.2px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 10px rgba(111, 73, 44, 0.18);
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 6px 14px rgba(111, 73, 44, 0.23);
+        }
+
+
+        button:active {
+            transform: translateY(0);
+        }
+
+
+        button:disabled {
+            background: #b9aa9a;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+
+            transform: none;
+        }
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        #status {
+            margin-top: 12px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #6e492f;
+        }
+
+
+        /* =====================================
+           SMALL VISUAL ACCENTS
+        ===================================== */
+
+        .card::before {
+            content: "";
+
+            display: block;
+
+            width: 34px;
+
+            height: 3px;
+
+            margin-bottom: 12px;
+
+            border-radius: 10px;
+
+            background: #c8a27f;
+        }
+
+
+        /* Don't show accent before screenshot
+           image area too strongly */
+
+        .card:first-of-type::before {
+            background: #9a6944;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 15px 10px 30px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            img {
+                max-height: 500px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="header">
+
+        <h1>
+            🛡 Privacy Vision Agent
+        </h1>
+
+        <p>
+            Privacy-preserving browser automation
+        </p>
+
+    </div>
+
+
+    <!-- =====================================
+         SANITIZATION RESULT
+    ====================================== -->
+
+    <div class="card">
+
+        <div class="privacy">
+
+            🔒 <b>Privacy Protection Active</b>
+
+            <br>
+
+            Sensitive visual information was
+            detected and sanitized locally
+            before being sent to the server.
+
+        </div>
+
+
+        <div class="label">
+            Sanitized Screenshot
+        </div>
+
+
+        <img
+            id="sanitizedImage"
+            alt="Sanitized screenshot"
+        >
+
+    </div>
+
+
+    <!-- =====================================
+         USER TASK
+    ====================================== -->
+
+    <div class="card">
+
+        <div class="label">
+            User Task
+        </div>
+
+        <div
+            class="value"
+            id="task"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         PRIVACY ANALYSIS
+    ====================================== -->
+
+    <div class="card">
+
+        <div class="label">
+            Local Privacy Analysis
+        </div>
+
+        <div
+            class="value"
+            id="privacyInfo"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         BACKEND DECISION
+    ====================================== -->
+
+    <div class="card">
+
+        <div class="label">
+            Backend Agent Decision
+        </div>
+
+        <div class="action">
+
+            <div id="action">
+                Waiting...
+            </div>
+
+
+            <button id="execute">
+                ▶ Execute Browser Action
+            </button>
+
+
+            <div id="status"></div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="result.js"></script>
+
+</body>
+
+</html>
